@@ -1,68 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/models/transaction_model.dart';
 import 'package:money_mantor/mvvm/observer.dart';
-import 'package:money_mantor/repository/transaction_repo.dart';
-import 'package:money_mantor/viewmodels/events/loading_event.dart';
-import 'package:money_mantor/viewmodels/events/transactions_loaded_event.dart';
-import 'package:money_mantor/viewmodels/transaction_viewmodel.dart';
+import 'package:money_mantor/views/Contracts/transactions_state.dart';
+import 'package:money_mantor/views/Contracts/transactions_statefulwidget.dart';
 import 'package:money_mantor/views/custom_widgets/transaction_list_item.dart';
 import 'package:money_mantor/views/transaction_widget.dart';
 
-class TransactionsWidget extends StatefulWidget {
+class TransactionsWidget extends TransactionsStatefulWidget {
   const TransactionsWidget({super.key});
 
   @override
   State<StatefulWidget> createState() => _TransactionsWidgetState();
 }
 
-class _TransactionsWidgetState extends State<TransactionsWidget>
+class _TransactionsWidgetState extends TransactionsState<TransactionsWidget>
     implements EventObserver {
-  final TransactionViewModel _transactionViewModel =
-      TransactionViewModel(TransactionRepo());
-  bool _isLoading = false;
-  List<Transaction> _transactions = List.empty();
-
-  double _totalTakenAmount = 0.0;
-  double _totalGivenAmount = 0.0;
-
-  void init() {
-    _transactionViewModel.fetchAll();
-  }
-
-  void recalculateTotalAmount() {
-    var tta = 0.0;
-    var tga = 0.0;
-    for (var element in _transactions) {
-      if (element.transactionType == TransactionType.Taken) {
-        tta += element.amount;
-      } else {
-        tga += element.amount;
-      }
-    }
-
-    setState(() {
-      _totalTakenAmount = tta;
-      _totalGivenAmount = tga;
-    });
-  }
-
-  @override
-  void initState() {
-    init();
-    _transactionViewModel.subscribe(this);
-    super.initState();
-  }
-
-  @override
-  void reassemble() {
-    //init();
-    super.reassemble();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return _isLoading
+    return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
           )
@@ -86,7 +41,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Text(_totalGivenAmount.toString())],
+                          children: [Text(totalGivenAmount.toString())],
                         ),
                       ),
                     ),
@@ -97,7 +52,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Text(_totalTakenAmount.toString())],
+                          children: [Text(totalTakenAmount.toString())],
                         ),
                       ),
                     )
@@ -105,11 +60,11 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: _transactions.length,
+                    itemCount: transactions.length,
                     padding: const EdgeInsets.only(bottom: 100),
                     itemBuilder: (context, index) {
                       return TransactionListItem(
-                        transaction: _transactions[index],
+                        transaction: transactions[index],
                         onTap: (transaction) => {
                           Navigator.of(context)
                               .push(
@@ -120,15 +75,12 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                                 ),
                               )
                               .then(
-                                (value) => {
-                                  setState(
-                                    () {
-                                      _transactionViewModel.fetchAll();
-                                    },
-                                  )
-                                },
+                                (value) => viewModel.fetchAll(),
                               ),
                           Global.Log.i(transaction.toString()),
+                        },
+                        onLongPress: (transaction){
+                          viewModel.deleteById(transaction.id!);
                         },
                       );
                     },
@@ -145,35 +97,11 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                       ),
                     )
                     .then(
-                      (value) => {
-                        setState(
-                          () {
-                            _transactionViewModel.fetchAll();
-                          },
-                        ),
-                      },
+                      (value) => viewModel.fetchAll(),
                     ),
               },
               child: const Icon(Icons.add),
             ),
           );
-  }
-
-  @override
-  void notify(ViewEvent event) {
-    if (event is LoadingEvent) {
-      setState(() {
-        _isLoading = event.isLoading;
-      });
-    } else if (event is TransactionsLoadedEvent) {
-      setState(
-        () {
-          _transactions = event.list;
-          recalculateTotalAmount();
-        },
-      );
-    } else {
-      Global.Log.e("Unknown Event.");
-    }
   }
 }

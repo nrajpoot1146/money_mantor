@@ -20,7 +20,7 @@ class TransactionRepo {
   Future<int> delete(int id) async {
     return Global.Db.getDataBaseInstance().delete(
       TransactionContracts.TABLE_NAME,
-      where: '${TransactionContracts.ID}: ?',
+      where: '${TransactionContracts.ID}= ?',
       whereArgs: [id],
     );
   }

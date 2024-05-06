@@ -6,8 +6,8 @@ import 'package:money_mantor/models/transaction_model.dart';
 
 class TransactionListItem extends StatelessWidget {
   final Transaction transaction;
-  final Function? onTap;
-  final Function? onLongPress;
+  final Function(Transaction)? onTap;
+  final Function(Transaction)? onLongPress;
   const TransactionListItem({
     super.key,
     required this.transaction,
@@ -21,10 +21,12 @@ class TransactionListItem extends StatelessWidget {
       // alignment: Alignment.,
       height: 75,
       child: InkWell(
-        onTap: () {
-          if (onTap != null) onTap!(transaction);
+        onTap: () => {
+          if (onTap != null) onTap!(transaction),
         },
-        onLongPress: () => onLongPress,
+        onLongPress: () => {
+          if (onLongPress != null) onLongPress!(transaction),
+        },
         child: Card(
           color: Colors.grey[50],
           shape: const BeveledRectangleBorder(),
