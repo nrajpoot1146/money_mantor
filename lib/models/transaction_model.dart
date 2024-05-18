@@ -47,13 +47,13 @@ class Transaction {
 
   @override
   String toString() {
-    return """Transaction {
-      id: $id,
-      personId: $personId, 
-      amount: $amount, 
-      transactionType: $transactionType, 
-      note: $note, 
-      dateTime: $dateTime
+    return """$Transaction {
+      ${TransactionContracts.ID}: $id,
+      ${TransactionContracts.PERSON_ID}: $personId, 
+      ${TransactionContracts.AMOUNT}: $amount, 
+      ${TransactionContracts.TRANSACTION_TYPE}: $transactionType, 
+      ${TransactionContracts.NOTE}: $note, 
+      ${TransactionContracts.DATE_TIME}: $dateTime
       }""";
   }
 }

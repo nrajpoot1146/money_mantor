@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
 import 'package:money_mantor/mvvm/observer.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
-import 'package:money_mantor/viewmodels/events/transaction_deleted_event.dart';
-import 'package:money_mantor/viewmodels/events/transactions_loaded_event.dart';
+import 'package:money_mantor/viewmodels/events/transaction_events/transaction_deleted_event.dart';
+import 'package:money_mantor/viewmodels/events/transaction_events/transactions_loaded_event.dart';
 import 'package:money_mantor/views/Contracts/transactions_statefulwidget.dart';
 
 import '../../models/transaction_model.dart';
@@ -29,8 +29,8 @@ abstract class TransactionsState<T extends TransactionsStatefulWidget>
     } else if (event is TransactionsLoadedEvent) {
       setState(
         () {
-          transactions = event.list;
-          recalculateTotalAmount();
+          transactions = event.data ?? List.empty();
+          calculateTotalAmount();
         },
       );
     } else if (event is TransactionDeletedEvent) {
@@ -40,7 +40,7 @@ abstract class TransactionsState<T extends TransactionsStatefulWidget>
     }
   }
 
-  void recalculateTotalAmount() {
+  void calculateTotalAmount() {
     var tta = 0.0;
     var tga = 0.0;
     for (var element in transactions) {

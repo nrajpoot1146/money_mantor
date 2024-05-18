@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:money_mantor/global.dart';
+import 'package:money_mantor/models/contracts/person_contracts.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -18,6 +19,7 @@ class DB {
   }
 
   void _onCreate(db, versio) {
+    db.execute(PersonContracts.CREATE_TABLE);
     db.execute(TransactionContracts.CREATE_TABLE);
     Global.Log.t("db onCreate");
   }

@@ -8,8 +8,8 @@ import 'package:money_mantor/global.dart';
 import 'package:money_mantor/mvvm/observer.dart';
 import 'package:money_mantor/repository/transaction_repo.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
-import 'package:money_mantor/viewmodels/events/transaction_add_event.dart';
-import 'package:money_mantor/viewmodels/events/transactions_loaded_event.dart';
+import 'package:money_mantor/viewmodels/events/transaction_events/transaction_add_event.dart';
+import 'package:money_mantor/viewmodels/events/transaction_events/transactions_loaded_event.dart';
 import 'package:money_mantor/views/Contracts/transaction_statefulwidget.dart';
 
 import '../../models/transaction_model.dart';

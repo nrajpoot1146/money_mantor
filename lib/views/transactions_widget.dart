@@ -17,6 +17,7 @@ class _TransactionsWidgetState extends TransactionsState<TransactionsWidget>
     implements EventObserver {
   @override
   Widget build(BuildContext context) {
+    
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),

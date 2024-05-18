@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-abstract class TransactionContracts{
+import 'package:money_mantor/models/contracts/person_contracts.dart';
+
+abstract class TransactionContracts {
   static const String TABLE_NAME = "transactions";
 
   static const String ID = "id";
@@ -16,7 +18,8 @@ abstract class TransactionContracts{
     $AMOUNT REAL,
     $TRANSACTION_TYPE TEXT,
     $NOTE TEXT,
-    $DATE_TIME TEXT)""";
+    $DATE_TIME TEXT,
+    FOREIGN KEY($PERSON_ID) REFERENCES ${PersonContracts.TABLE_NAME}(${PersonContracts.ID}))""";
 
   static const String INSERT = """ INSERT INTO $TABLE_NAME(
   $PERSON_ID,

@@ -2,13 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
 import 'package:money_mantor/views/transactions_widget.dart';
-// import 'package:window_size/window_size.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // if(Platform.isWindows){
-  //   setWindows
-  // }
   runApp(const MyApp());
 }
 
