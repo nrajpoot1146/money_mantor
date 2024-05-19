@@ -1,4 +1,5 @@
 import 'package:money_mantor/global.dart';
+import 'package:money_mantor/models/contracts/person_contracts.dart';
 import 'package:money_mantor/models/contracts/transaction_contracts.dart';
 import 'package:money_mantor/repository/repo.dart';
 
@@ -51,7 +52,17 @@ class TransactionRepo extends Repo<Transaction> {
         TransactionContracts.TABLE_NAME,
         groupBy: TransactionContracts.DATE_TIME,
         orderBy: '${TransactionContracts.DATE_TIME} DESC');
-    return Future.value(_filter(data));
+    return Future.value(_filterList(data));
+  }
+
+  @override
+  Future<Transaction?> fetchById(int id) async {
+    var data = await Global.Db.getDataBaseInstance().query(
+      TransactionContracts.TABLE_NAME,
+      where: '${TransactionContracts.ID} = ?',
+      whereArgs: [id],
+    );
+    return Future.value(_filter(data.first));
   }
 
   Future<List<Transaction>?> fetchAllByPerson(Person person) async {
@@ -62,28 +73,31 @@ class TransactionRepo extends Repo<Transaction> {
       where: '${TransactionContracts.PERSON_ID} = ?',
       whereArgs: [person.id],
     );
-    return Future.value(_filter(data));
+    return Future.value(_filterList(data));
   }
 
-  List<Transaction> _filter(List<Map<String, Object?>> data) {
+  List<Transaction> _filterList(List<Map<String, Object?>> data) {
     List<Transaction> res = List.empty(growable: true);
     try {
       for (var element in data) {
-        Map<String, Object?> tempMap =
-            element.map((key, value) => MapEntry(key, value));
-        tempMap[TransactionContracts.TRANSACTION_TYPE] = TransactionType.values
-            .firstWhere((type) =>
-                type.toString() ==
-                tempMap[TransactionContracts.TRANSACTION_TYPE]);
-        tempMap[TransactionContracts.DATE_TIME] =
-            DateTime.parse(tempMap[TransactionContracts.DATE_TIME] as String);
-        res.add(
-          Transaction.fromMap(tempMap),
-        );
+        res.add(_filter(element));
       }
     } catch (e) {
       Global.Log.e(e);
     }
     return res;
+  }
+
+  Transaction _filter(Map<String, Object?> data) {
+    Map<String, Object?> tempMap =
+        data.map((key, value) => MapEntry(key, value));
+    tempMap[TransactionContracts.TRANSACTION_TYPE] =
+        TransactionType.values.firstWhere(
+      (type) =>
+          type.toString() == tempMap[TransactionContracts.TRANSACTION_TYPE],
+    );
+    tempMap[TransactionContracts.DATE_TIME] =
+        DateTime.parse(tempMap[TransactionContracts.DATE_TIME] as String);
+    return Transaction.fromMap(tempMap);
   }
 }

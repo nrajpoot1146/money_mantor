@@ -73,27 +73,23 @@ class TransactionViewModel extends EventViewModel {
   }
 
   void delete(Transaction transaction) {
-    notify(
-      LoadingEvent(isLoading: true),
-    );
-    _transactionRepo.delete(transaction.id!).then((value) => {
-          notify(
-            LoadingEvent(isLoading: false),
-          ),
-          notify(TransactionDeletedEvent(transaction: transaction)),
-        });
+    deleteById(transaction.id!);
   }
 
   void deleteById(int id) {
     notify(
       LoadingEvent(isLoading: true),
     );
-    _transactionRepo.delete(id).then((value) => {
-          notify(
-            LoadingEvent(isLoading: false),
-          ),
-          //notify(TransactionDeletedEvent()),
-        });
+    _transactionRepo.fetchById(id).then((trans) {
+      _transactionRepo.delete(id).then(
+            (value) => {
+              notify(
+                LoadingEvent(isLoading: false),
+              ),
+              notify(TransactionDeletedEvent(transaction: trans!)),
+            },
+          );
+    });
   }
 
   void fetchAll() {

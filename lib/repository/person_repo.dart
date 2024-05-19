@@ -41,10 +41,17 @@ class PersonRepo extends Repo<Person> {
   @override
   Future<int> update(Person t) async {
     return Global.Db.getDataBaseInstance().update(
+        PersonContracts.TABLE_NAME, t.toMap(),
+        where: "${PersonContracts.ID} = ?", whereArgs: [PersonContracts.ID]);
+  }
+
+  @override
+  Future<Person?> fetchById(int id) async {
+    var data = await Global.Db.getDataBaseInstance().query(
       PersonContracts.TABLE_NAME,
-      t.toMap(),
       where: "${PersonContracts.ID} = ?",
-      whereArgs: [PersonContracts.ID]
+      whereArgs: [id],
     );
+    return Future.value(Person.fromMap(data.first));
   }
 }
