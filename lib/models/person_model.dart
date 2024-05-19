@@ -8,17 +8,23 @@ class Person {
 
   Person({required this.name, this.mobileNo, this.emailId});
 
-  Person.fromDefault(Map<String, Object?> map)
+  Person.fromDefault()
       : id = 1,
-      name = 'Default',
-      mobileNo = '1234567890',
-      emailId = 'default@default.com';
+        name = 'Default',
+        mobileNo = '1234567890',
+        emailId = 'default@default.com';
+
+  Person.fromEmpty()
+      : id = null,
+        name = '',
+        mobileNo = '',
+        emailId = '';
 
   Person.fromMap(Map<String, Object?> map)
       : id = map[PersonContracts.ID] as int,
-      name = map[PersonContracts.NAME] as String,
-      mobileNo = map[PersonContracts.MOBILE_NO] as String,
-      emailId = map[PersonContracts.EMAIL_ID] as String;
+        name = map[PersonContracts.NAME] as String,
+        mobileNo = map[PersonContracts.MOBILE_NO] as String,
+        emailId = map[PersonContracts.EMAIL_ID] as String;
 
   Map<String, Object?> toMap() {
     return {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money_mantor/global.dart';
-import 'package:money_mantor/mvvm/observer.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_deleted_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transactions_loaded_event.dart';
@@ -11,7 +9,7 @@ import '../../repository/transaction_repo.dart';
 import '../../viewmodels/transaction_viewmodel.dart';
 
 abstract class TransactionsState<T extends TransactionsStatefulWidget>
-    extends State<T> implements EventObserver {
+    extends State<T> {
   final TransactionViewModel viewModel =
       TransactionViewModel(TransactionRepo());
   bool isLoading = false;
@@ -19,26 +17,6 @@ abstract class TransactionsState<T extends TransactionsStatefulWidget>
 
   double totalTakenAmount = 0.0;
   double totalGivenAmount = 0.0;
-
-  @override
-  void notify(ViewEvent event) {
-    if (event is LoadingEvent) {
-      setState(() {
-        isLoading = event.isLoading;
-      });
-    } else if (event is TransactionsLoadedEvent) {
-      setState(
-        () {
-          transactions = event.data ?? List.empty();
-          calculateTotalAmount();
-        },
-      );
-    } else if (event is TransactionDeletedEvent) {
-      viewModel.fetchAll();
-    } else {
-      Global.Log.e("Unknown Event.");
-    }
-  }
 
   void calculateTotalAmount() {
     var tta = 0.0;
@@ -60,7 +38,31 @@ abstract class TransactionsState<T extends TransactionsStatefulWidget>
   @override
   void initState() {
     super.initState();
-    viewModel.subscribe(this);
-    viewModel.fetchAll();
+    viewModel.on<LoadingEvent>().listen(
+          (p0) => setState(
+            () {
+              isLoading = p0.isLoading;
+            },
+          ),
+        );
+
+    viewModel.on<TransactionDeletedEvent>().listen(
+          (p0) => {
+            viewModel.fetchAllByPerson(widget.person),
+            calculateTotalAmount(),
+          },
+        );
+
+    viewModel.on<TransactionsLoadedEvent>().listen(
+          (p0) => {
+            setState(
+              () {
+                transactions = p0.data;
+              },
+            ),
+            calculateTotalAmount(),
+          },
+        );
+    viewModel.fetchAllByPerson(widget.person);
   }
 }

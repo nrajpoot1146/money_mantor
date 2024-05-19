@@ -1,15 +1,18 @@
+import 'package:money_mantor/global.dart';
 import 'package:money_mantor/mvvm/observer.dart';
 
 abstract class EventViewModel {
-  final List<EventObserver> _observerList = List.empty(growable: true);
+  final Map<Object, EventObservers> _observerList = {};
 
-  void subscribe(EventObserver eventObserver) {
-    _observerList.add(eventObserver);
+  EventObservers<T> on<T extends ViewEvent>() {
+    var eventObservers = EventObservers<T>();
+    _observerList[T] = eventObservers;
+    return eventObservers;
   }
 
-  bool unsubscribe(EventObserver o) {
-    if (_observerList.contains(o)) {
-      _observerList.remove(o);
+  bool unsubscribe<T extends ViewEvent>() {
+    if (_observerList.keys.contains(T)) {
+      _observerList.remove(T);
       return true;
     } else {
       return false;
@@ -17,8 +20,10 @@ abstract class EventViewModel {
   }
 
   void notify(ViewEvent viewEvent) {
-    for (var element in _observerList) {
-        element.notify(viewEvent);
-      }
+    if (_observerList.containsKey(viewEvent.runtimeType)) {
+      _observerList[viewEvent.runtimeType]!.notify(viewEvent);
+    } else {
+      Global.Log.e("No Subscriber found for: ${viewEvent.runtimeType}");
+    }
   }
 }

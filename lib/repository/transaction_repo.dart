@@ -2,9 +2,10 @@ import 'package:money_mantor/global.dart';
 import 'package:money_mantor/models/contracts/transaction_contracts.dart';
 import 'package:money_mantor/repository/repo.dart';
 
+import '../models/person_model.dart';
 import '../models/transaction_model.dart';
 
-class TransactionRepo extends Repo<Transaction>{
+class TransactionRepo extends Repo<Transaction> {
   @override
   Future<int> add(Transaction t) async {
     var map = t.toMap();
@@ -46,12 +47,26 @@ class TransactionRepo extends Repo<Transaction>{
 
   @override
   Future<List<Transaction>?> fetchAll() async {
-    List<Transaction> res = List.empty(growable: true);
     var data = await Global.Db.getDataBaseInstance().query(
         TransactionContracts.TABLE_NAME,
         groupBy: TransactionContracts.DATE_TIME,
         orderBy: '${TransactionContracts.DATE_TIME} DESC');
+    return Future.value(_filter(data));
+  }
 
+  Future<List<Transaction>?> fetchAllByPerson(Person person) async {
+    var data = await Global.Db.getDataBaseInstance().query(
+      TransactionContracts.TABLE_NAME,
+      groupBy: TransactionContracts.DATE_TIME,
+      orderBy: '${TransactionContracts.DATE_TIME} DESC',
+      where: '${TransactionContracts.PERSON_ID} = ?',
+      whereArgs: [person.id],
+    );
+    return Future.value(_filter(data));
+  }
+
+  List<Transaction> _filter(List<Map<String, Object?>> data) {
+    List<Transaction> res = List.empty(growable: true);
     try {
       for (var element in data) {
         Map<String, Object?> tempMap =
@@ -69,6 +84,6 @@ class TransactionRepo extends Repo<Transaction>{
     } catch (e) {
       Global.Log.e(e);
     }
-    return Future.value(res);
+    return res;
   }
 }

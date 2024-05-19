@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/mvvm/observer.dart';
 import 'package:money_mantor/views/Contracts/transactions_state.dart';
 import 'package:money_mantor/views/Contracts/transactions_statefulwidget.dart';
 import 'package:money_mantor/views/custom_widgets/transaction_list_item.dart';
 import 'package:money_mantor/views/transaction_widget.dart';
 
 class TransactionsWidget extends TransactionsStatefulWidget {
-  const TransactionsWidget({super.key});
+  const TransactionsWidget({super.key, required super.person});
 
   @override
   State<StatefulWidget> createState() => _TransactionsWidgetState();
 }
 
-class _TransactionsWidgetState extends TransactionsState<TransactionsWidget>
-    implements EventObserver {
+class _TransactionsWidgetState extends TransactionsState<TransactionsWidget> {
   @override
   Widget build(BuildContext context) {
-    
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
           )
         : Scaffold(
             appBar: AppBar(
-              title: const Text('Cutomer name'),
+              title: Text(widget.person.name),
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             ),
             body: Column(
@@ -72,15 +69,17 @@ class _TransactionsWidgetState extends TransactionsState<TransactionsWidget>
                                 MaterialPageRoute(
                                   builder: (con) => TransactionWidget(
                                     transaction: transaction,
+                                    person: widget.person,
                                   ),
                                 ),
                               )
                               .then(
-                                (value) => viewModel.fetchAll(),
+                                (value) =>
+                                    viewModel.fetchAllByPerson(widget.person),
                               ),
                           Global.Log.i(transaction.toString()),
                         },
-                        onLongPress: (transaction){
+                        onLongPress: (transaction) {
                           viewModel.deleteById(transaction.id!);
                         },
                       );
@@ -94,11 +93,13 @@ class _TransactionsWidgetState extends TransactionsState<TransactionsWidget>
                 Navigator.of(context)
                     .push(
                       MaterialPageRoute(
-                        builder: (context) => const TransactionWidget(),
+                        builder: (context) => TransactionWidget(
+                          person: widget.person,
+                        ),
                       ),
                     )
                     .then(
-                      (value) => viewModel.fetchAll(),
+                      (value) => viewModel.fetchAllByPerson(widget.person),
                     ),
               },
               child: const Icon(Icons.add),

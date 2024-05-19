@@ -6,7 +6,7 @@ import 'package:money_mantor/views/Contracts/transaction_state.dart';
 import 'package:money_mantor/views/Contracts/transaction_statefulwidget.dart';
 
 class TransactionWidget extends TransactionStatefulWidget {
-  const TransactionWidget({super.key, super.transaction});
+  const TransactionWidget({super.key, super.transaction, required super.person});
 
   @override
   State<StatefulWidget> createState() => _TransactionWidgetState();

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/transactions_widget.dart';
+import 'package:money_mantor/views/persons_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home:
-          !_isReady ? const Text("Loading Config") : const TransactionsWidget(),
+          !_isReady ? const Text("Loading Config") : const PersonsWidget(),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../models/person_model.dart';
+
 abstract class TransactionsStatefulWidget extends StatefulWidget{
-  const TransactionsStatefulWidget({super.key});
+  final Person person;
+  const TransactionsStatefulWidget({super.key, required this.person});
 }

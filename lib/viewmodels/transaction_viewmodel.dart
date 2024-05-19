@@ -6,6 +6,8 @@ import 'package:money_mantor/viewmodels/events/transaction_events/transaction_ad
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_deleted_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transactions_loaded_event.dart';
 
+import '../models/person_model.dart';
+
 class TransactionViewModel extends EventViewModel {
   final TransactionRepo _transactionRepo;
 
@@ -99,6 +101,22 @@ class TransactionViewModel extends EventViewModel {
       LoadingEvent(isLoading: true),
     );
     _transactionRepo.fetchAll().then(
+          (value) => {
+            notify(
+              LoadingEvent(isLoading: false),
+            ),
+            notify(
+              TransactionsLoadedEvent(value!),
+            ),
+          },
+        );
+  }
+
+  void fetchAllByPerson(Person p) {
+    notify(
+      LoadingEvent(isLoading: true),
+    );
+    _transactionRepo.fetchAllByPerson(p).then(
           (value) => {
             notify(
               LoadingEvent(isLoading: false),

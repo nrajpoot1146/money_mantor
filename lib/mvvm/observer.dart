@@ -1,5 +1,19 @@
-abstract class EventObserver{
+abstract class EventObserver {
   void notify(ViewEvent event);
+}
+
+class EventObservers<T extends ViewEvent> {
+  List<Function(T)> observers = List.empty(growable: true);
+
+  void listen(Function(T) viewEvent) {
+    observers.add(viewEvent);
+  }
+
+  void notify(T viewEvent) {
+    for (var element in observers) {
+      element(viewEvent);
+    }
+  }
 }
 
 abstract class ViewEvent {
@@ -7,7 +21,7 @@ abstract class ViewEvent {
   ViewEvent(this.qualifier);
 
   @override
-  String toString(){
+  String toString() {
     return 'ViewEvent{qualifier: $qualifier}';
   }
 }
