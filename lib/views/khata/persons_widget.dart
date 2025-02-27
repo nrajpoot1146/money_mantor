@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/Contracts/persons_state.dart';
-import 'package:money_mantor/views/Contracts/persons_statefulwidget.dart';
+import 'package:money_mantor/views/Contracts/khata/persons_state.dart';
+import 'package:money_mantor/views/Contracts/khata/persons_statefulwidget.dart';
 import 'package:money_mantor/views/custom_widgets/person_list_item.dart';
-import 'package:money_mantor/views/person_widget.dart';
-import 'package:money_mantor/views/transactions_widget.dart';
+import 'package:money_mantor/views/khata/person_widget.dart';
+import 'package:money_mantor/views/khata/transactions_widget.dart';
 
 class PersonsWidget extends PersonsStatefulWidget {
   const PersonsWidget({super.key});
@@ -34,8 +34,11 @@ class _PesonsState extends PersonsState<PersonsWidget> {
                     person: p,
                   ),
                 ),
-              );
+              ).then((v) {
+                viewModel.fetchAll();
+              },);
             },
+            amount: totalAmountByPersonId[personsList[index].id],
           );
         },
       ),

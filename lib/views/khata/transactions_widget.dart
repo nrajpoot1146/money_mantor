@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/Contracts/transactions_state.dart';
-import 'package:money_mantor/views/Contracts/transactions_statefulwidget.dart';
+import 'package:money_mantor/views/Contracts/khata/transactions_state.dart';
+import 'package:money_mantor/views/Contracts/khata/transactions_statefulwidget.dart';
 import 'package:money_mantor/views/custom_widgets/transaction_list_item.dart';
-import 'package:money_mantor/views/transaction_widget.dart';
+import 'package:money_mantor/views/khata/transaction_widget.dart';
 
 class TransactionsWidget extends TransactionsStatefulWidget {
   const TransactionsWidget({super.key, required super.person});

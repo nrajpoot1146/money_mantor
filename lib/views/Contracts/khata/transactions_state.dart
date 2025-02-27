@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_deleted_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transactions_loaded_event.dart';
-import 'package:money_mantor/views/Contracts/transactions_statefulwidget.dart';
+import 'package:money_mantor/views/Contracts/khata/transactions_statefulwidget.dart';
 
-import '../../models/transaction_model.dart';
-import '../../repository/transaction_repo.dart';
-import '../../viewmodels/transaction_viewmodel.dart';
+import '../../../models/transaction_model.dart';
+import '../../../repository/transaction_repo.dart';
+import '../../../viewmodels/transaction_viewmodel.dart';
 
 abstract class TransactionsState<T extends TransactionsStatefulWidget>
     extends State<T> {

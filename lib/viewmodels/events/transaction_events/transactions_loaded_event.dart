@@ -1,6 +1,6 @@
 import 'package:money_mantor/models/transaction_model.dart';
 import 'package:money_mantor/viewmodels/events/loaded_event.dart';
 
-class TransactionsLoadedEvent extends LoadedEvent<Transaction> {
+class TransactionsLoadedEvent extends LoadedEvent<List<Transaction>> {
   TransactionsLoadedEvent(List<Transaction> transaction) : super('$TransactionsLoadedEvent', transaction);
 }

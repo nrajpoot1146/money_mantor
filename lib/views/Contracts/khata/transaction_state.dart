@@ -7,10 +7,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:money_mantor/repository/transaction_repo.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_add_event.dart';
-import 'package:money_mantor/views/Contracts/transaction_statefulwidget.dart';
+import 'package:money_mantor/views/Contracts/khata/transaction_statefulwidget.dart';
 
-import '../../models/transaction_model.dart';
-import '../../viewmodels/transaction_viewmodel.dart';
+import '../../../models/transaction_model.dart';
+import '../../../viewmodels/transaction_viewmodel.dart';
 
 abstract class TransactionState<T extends TransactionStatefulWidget>
     extends State<T> {

@@ -37,7 +37,7 @@ class DB {
   }
 
   Future<bool> init() async {
-    var dbpath = r"E:\AndroidStudioProjects\MoneyMantor";
+    var dbpath = r"C:\Data\Proj\money_mantor\lib\Database\";
     if (Platform.isWindows || Platform.isLinux) {
       sqfliteFfiInit();
       var databaseFactory = databaseFactoryFfi;

@@ -1,9 +1,11 @@
 import 'package:money_mantor/global.dart';
 import 'package:money_mantor/mvvm/observer.dart';
 
+// base class for view models
 abstract class EventViewModel {
   final Map<Object, EventObservers> _observerList = {};
 
+  // functions to register a method
   EventObservers<T> on<T extends ViewEvent>() {
     var eventObservers = EventObservers<T>();
     _observerList[T] = eventObservers;

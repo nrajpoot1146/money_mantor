@@ -1,7 +1,10 @@
+
+// unnecessary class created new class name EventObservers using which we can register multiple observer
 abstract class EventObserver {
   void notify(ViewEvent event);
 }
 
+// 
 class EventObservers<T extends ViewEvent> {
   List<Function(T)> observers = List.empty(growable: true);
 
@@ -16,6 +19,7 @@ class EventObservers<T extends ViewEvent> {
   }
 }
 
+// help to transfer data
 abstract class ViewEvent {
   String qualifier;
   ViewEvent(this.qualifier);

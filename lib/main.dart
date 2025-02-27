@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/persons_widget.dart';
+import 'package:money_mantor/views/khata/persons_widget.dart';
 
 void main() {
   runApp(const MyApp());

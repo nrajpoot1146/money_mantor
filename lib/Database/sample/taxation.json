@@ -1,0 +1,10 @@
+{
+    "taxation" : {
+        "ELSS" : 0.0,
+        "PPF" : 0.0,
+        "NPS" : 0.0,
+        "NSC" : 0.0,
+        "LIC" : 0.0,
+        "TermLifeInsurance" : 0.0
+    }
+}

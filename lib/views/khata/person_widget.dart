@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:money_mantor/views/Contracts/person_state.dart';
-import 'package:money_mantor/views/Contracts/person_statefulwidget.dart';
+import 'package:money_mantor/views/Contracts/khata/person_state.dart';
+import 'package:money_mantor/views/Contracts/khata/person_statefulwidget.dart';
 
-class PersonWidget extends PersonStatefulWidget {
+class PersonWidget extends PersonAddNewStatefulWidget {
   const PersonWidget({super.key, super.person});
 
   @override
-  State<StatefulWidget> createState() => _PersonState();
+  State<StatefulWidget> createState() => _PersonAddNewState();
 }
 
-class _PersonState extends PersonState<PersonWidget> {
+class _PersonAddNewState extends PersonAddNewState<PersonWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

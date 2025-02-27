@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/repository/person_repo.dart';
+import 'package:money_mantor/repository/transaction_repo.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/person_events/person_add_event.dart';
 import 'package:money_mantor/viewmodels/person_viewmodel.dart';
-import 'package:money_mantor/views/Contracts/person_statefulwidget.dart';
+import 'package:money_mantor/views/Contracts/khata/person_statefulwidget.dart';
 
-import '../../models/person_model.dart';
+import '../../../models/person_model.dart';
 
-abstract class PersonState<T extends PersonStatefulWidget> extends State<T> {
-  final PersonViewModel viewModel = PersonViewModel(PersonRepo());
+abstract class PersonAddNewState<T extends PersonAddNewStatefulWidget> extends State<T> {
+  final PersonViewModel viewModel = PersonViewModel(PersonRepo(), TransactionRepo());
   final Person person = Person.fromEmpty();
   bool isLoading = false;
 
