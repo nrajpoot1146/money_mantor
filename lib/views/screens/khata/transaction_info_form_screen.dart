@@ -2,8 +2,7 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:money_mantor/views/Contracts/khata/transaction_state.dart';
-import 'package:money_mantor/views/Contracts/khata/transaction_statefulwidget.dart';
+import 'package:money_mantor/views/states/khata/transaction_state.dart';
 
 class TransactionWidget extends TransactionStatefulWidget {
   const TransactionWidget({super.key, super.transaction, required super.person});

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:money_mantor/global.dart';
 import 'package:money_mantor/models/contracts/person_contracts.dart';
 import 'package:path/path.dart';
@@ -7,33 +9,35 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../models/contracts/transaction_contracts.dart';
 
+@singleton
 class DB {
   late Database _db;
+  final Logger _logger;
   // ignore: non_constant_identifier_names
   final String DB_FILE_NAME = 'database.db'; 
-  DB();
+  DB(this._logger);
 
   void _onConfigure(db) {
-    Global.Log.i("");
-    Global.Log.t("db onConfiguration.");
+    _logger.i("");
+    _logger.t("db onConfiguration.");
   }
 
   void _onCreate(db, versio) {
     db.execute(PersonContracts.CREATE_TABLE);
     db.execute(TransactionContracts.CREATE_TABLE);
-    Global.Log.t("db onCreate");
+    _logger.t("db onCreate");
   }
 
   void _onDowngrade(db, oldVersion, newVersion) {
-    Global.Log.t("db onDowngrade");
+    _logger.t("db onDowngrade");
   }
 
   void _onOpen(db) {
-    Global.Log.t("db onOpen");
+    _logger.t("db onOpen");
   }
 
   void _onUpgrade(db, oldVersion, newVersion) {
-    Global.Log.t("db onUpgrade");
+    _logger.t("db onUpgrade");
   }
 
   Future<bool> init() async {
@@ -54,7 +58,7 @@ class DB {
       return Future.value(true);
     } else if (Platform.isAndroid || Platform.isIOS) {
       dbpath = join(await getDatabasesPath(), DB_FILE_NAME);
-      Global.Log.d(dbpath);
+      _logger.d(dbpath);
       _db = await openDatabase(dbpath,
           onConfigure: _onConfigure,
           onCreate: _onCreate,
@@ -64,7 +68,7 @@ class DB {
           version: 1);
       return Future.value(true);
     } else {
-      Global.Log.e("Unknown Platform");
+      _logger.e("Unknown Platform");
       return Future.value(false);
     }
   }

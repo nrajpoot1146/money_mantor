@@ -1,9 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:money_mantor/di/locator.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/khata/persons_widget.dart';
+import 'package:money_mantor/views/screens/home_screen.dart';
+import 'package:money_mantor/views/screens/khata/persons_list_screen.dart';
+import 'di/configure_dependencies.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDependencies();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
@@ -68,7 +74,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home:
-          !_isReady ? const Text("Loading Config") : const PersonsWidget(),
+          !_isReady ? const Text("Loading Config") : const HomeScreen(),
     );
   }
 }

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:money_mantor/di/locator.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_deleted_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transactions_loaded_event.dart';
-import 'package:money_mantor/views/Contracts/khata/transactions_statefulwidget.dart';
 
+import '../../../models/person_model.dart';
 import '../../../models/transaction_model.dart';
-import '../../../repository/transaction_repo.dart';
 import '../../../viewmodels/transaction_viewmodel.dart';
 
-abstract class TransactionsState<T extends TransactionsStatefulWidget>
+abstract class TransactionsListState<T extends TransactionsListStatefulWidget>
     extends State<T> {
-  final TransactionViewModel viewModel =
-      TransactionViewModel(TransactionRepo());
+  final TransactionViewModel viewModel = locator<TransactionViewModel>();
   bool isLoading = false;
   List<Transaction> transactions = List.empty();
 
@@ -65,4 +64,9 @@ abstract class TransactionsState<T extends TransactionsStatefulWidget>
         );
     viewModel.fetchAllByPerson(widget.person);
   }
+}
+
+abstract class TransactionsListStatefulWidget extends StatefulWidget{
+  final Person person;
+  const TransactionsListStatefulWidget({super.key, required this.person});
 }

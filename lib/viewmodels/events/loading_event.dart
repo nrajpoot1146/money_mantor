@@ -1,4 +1,4 @@
-import 'package:money_mantor/mvvm/observer.dart';
+import 'package:money_mantor/utils/mvvm/observer.dart';
 
 class LoadingEvent extends ViewEvent{
   final bool isLoading;

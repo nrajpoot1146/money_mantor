@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money_mantor/views/Contracts/taxation/taxation_state.dart';
-import 'package:money_mantor/views/Contracts/taxation/taxation_statefulwidget.dart';
+import 'package:money_mantor/views/states/taxation/taxation_state.dart';
+import 'package:money_mantor/views/states/taxation/taxation_statefulwidget.dart';
 
 class TaxationWidget extends TaxationStatefulWidget {
   //const PersonWidget({super.key, super.person});

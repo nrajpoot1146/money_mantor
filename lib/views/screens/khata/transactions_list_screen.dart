@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/Contracts/khata/transactions_state.dart';
-import 'package:money_mantor/views/Contracts/khata/transactions_statefulwidget.dart';
-import 'package:money_mantor/views/custom_widgets/transaction_list_item.dart';
-import 'package:money_mantor/views/khata/transaction_widget.dart';
+import 'package:money_mantor/views/states/khata/transactions_list_state.dart';
+import 'package:money_mantor/views/widgets/transaction_list_item.dart';
+import 'package:money_mantor/views/screens/khata/transaction_info_form_screen.dart';
 
-class TransactionsWidget extends TransactionsStatefulWidget {
-  const TransactionsWidget({super.key, required super.person});
+class TransactionsListScreen extends TransactionsListStatefulWidget {
+  const TransactionsListScreen({super.key, required super.person});
 
   @override
-  State<StatefulWidget> createState() => _TransactionsWidgetState();
+  State<StatefulWidget> createState() => _TransactionsListScreenState();
 }
 
-class _TransactionsWidgetState extends TransactionsState<TransactionsWidget> {
+class _TransactionsListScreenState extends TransactionsListState<TransactionsListScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoading

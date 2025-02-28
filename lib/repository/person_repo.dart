@@ -1,12 +1,17 @@
-import 'package:money_mantor/global.dart';
+import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:money_mantor/models/contracts/person_contracts.dart';
 import 'package:money_mantor/models/person_model.dart';
 import 'package:money_mantor/repository/repo.dart';
 
+@singleton
 class PersonRepo extends Repo<Person> {
+  final Logger _logger;
+  PersonRepo(super._db, this._logger);
+
   @override
   Future<int> add(Person t) async {
-    return Global.Db.getDataBaseInstance().insert(
+    return db.getDataBaseInstance().insert(
       PersonContracts.TABLE_NAME,
       t.toMap(),
     );
@@ -14,7 +19,7 @@ class PersonRepo extends Repo<Person> {
 
   @override
   Future<int> delete(int id) async {
-    return Global.Db.getDataBaseInstance().delete(
+    return db.getDataBaseInstance().delete(
       PersonContracts.TABLE_NAME,
       where: "${PersonContracts.ID} = ?",
       whereArgs: [id],
@@ -25,14 +30,14 @@ class PersonRepo extends Repo<Person> {
   Future<List<Person>?> fetchAll() async {
     List<Person> res = List.empty(growable: true);
     var data =
-        await Global.Db.getDataBaseInstance().query(PersonContracts.TABLE_NAME);
+        await db.getDataBaseInstance().query(PersonContracts.TABLE_NAME);
     try {
       for (var element in data) {
         var person = Person.fromMap(element);
         res.add(person);
       }
     } catch (e) {
-      Global.Log.e(e);
+      _logger.e(e);
       return Future.value(null);
     }
     return Future.value(res);
@@ -40,14 +45,14 @@ class PersonRepo extends Repo<Person> {
 
   @override
   Future<int> update(Person t) async {
-    return Global.Db.getDataBaseInstance().update(
+    return db.getDataBaseInstance().update(
         PersonContracts.TABLE_NAME, t.toMap(),
         where: "${PersonContracts.ID} = ?", whereArgs: [PersonContracts.ID]);
   }
 
   @override
   Future<Person?> fetchById(int id) async {
-    var data = await Global.Db.getDataBaseInstance().query(
+    var data = await db.getDataBaseInstance().query(
       PersonContracts.TABLE_NAME,
       where: "${PersonContracts.ID} = ?",
       whereArgs: [id],

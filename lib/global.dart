@@ -2,14 +2,15 @@
 
 import 'package:logger/logger.dart';
 import 'package:money_mantor/Database/db.dart';
+import 'package:get_it/get_it.dart';
 
 abstract class Global {
   static late Logger Log;
   static late DB Db;
 
   static Future<bool> init() async{
-    Log = Logger();
-    Db = DB();
+    Log = GetIt.I<Logger>();
+    Db = GetIt.I<DB>();
     bool res = await Db.init();
     return Future.value(res);
   }

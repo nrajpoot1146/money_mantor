@@ -1,4 +1,4 @@
-import '../../mvvm/observer.dart';
+import '../../utils/mvvm/observer.dart';
 
 class LoadedEvent<T extends Object> extends ViewEvent{
   final T data;

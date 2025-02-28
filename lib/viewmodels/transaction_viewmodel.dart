@@ -1,5 +1,6 @@
+import 'package:injectable/injectable.dart';
 import 'package:money_mantor/models/transaction_model.dart';
-import 'package:money_mantor/mvvm/viewmodel.dart';
+import 'package:money_mantor/utils/mvvm/base_viewmodel.dart';
 import 'package:money_mantor/repository/transaction_repo.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_add_event.dart';
@@ -8,10 +9,11 @@ import 'package:money_mantor/viewmodels/events/transaction_events/transactions_l
 
 import '../models/person_model.dart';
 
-class TransactionViewModel extends EventViewModel {
+@injectable
+class TransactionViewModel extends BaseViewModel {
   final TransactionRepo _transactionRepo;
 
-  TransactionViewModel(this._transactionRepo);
+  TransactionViewModel(this._transactionRepo, super.logger);
 
   /// Add transaction to db
   void add(Transaction transaction) {

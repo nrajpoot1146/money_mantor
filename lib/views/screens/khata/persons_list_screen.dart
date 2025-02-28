@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:money_mantor/global.dart';
-import 'package:money_mantor/views/Contracts/khata/persons_state.dart';
-import 'package:money_mantor/views/Contracts/khata/persons_statefulwidget.dart';
-import 'package:money_mantor/views/custom_widgets/person_list_item.dart';
-import 'package:money_mantor/views/khata/person_widget.dart';
-import 'package:money_mantor/views/khata/transactions_widget.dart';
+import 'package:money_mantor/views/states/khata/persons_list_state.dart';
+import 'package:money_mantor/views/widgets/person_list_item.dart';
+import 'package:money_mantor/views/screens/khata/person_info_form_screen.dart';
+import 'package:money_mantor/views/screens/khata/transactions_list_screen.dart';
 
-class PersonsWidget extends PersonsStatefulWidget {
-  const PersonsWidget({super.key});
+class PersonsListScreen extends PersonsStatefulWidget {
+  const PersonsListScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _PesonsState();
+  State<StatefulWidget> createState() => _PesonsListState();
 }
 
-class _PesonsState extends PersonsState<PersonsWidget> {
+class _PesonsListState extends PersonsListState<PersonsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +29,7 @@ class _PesonsState extends PersonsState<PersonsWidget> {
               Global.Log.i("On Tap: ${p.name}");
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => TransactionsWidget(
+                  builder: (context) => TransactionsListScreen(
                     person: p,
                   ),
                 ),
@@ -38,7 +37,7 @@ class _PesonsState extends PersonsState<PersonsWidget> {
                 viewModel.fetchAll();
               },);
             },
-            amount: totalAmountByPersonId[personsList[index].id],
+            amount: totalAmountByPersonId[personsList[index].id] ?? 0,
           );
         },
       ),
@@ -47,7 +46,7 @@ class _PesonsState extends PersonsState<PersonsWidget> {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => const PersonWidget(),
+                  builder: (context) => const PersonInfoFormScreen(),
                 ),
               )
               .then(

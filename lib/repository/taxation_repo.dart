@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:money_mantor/models/section80C_model.dart';
 import 'package:money_mantor/repository/repo.dart';
 
+@injectable
 class TaxationRepo extends Repo<Section80C> {
+  TaxationRepo(super.db);
   @override
   Future<int> add(Section80C t) {
     // TODO: implement add

@@ -1,12 +1,16 @@
-import 'package:money_mantor/global.dart';
-import 'package:money_mantor/models/contracts/person_contracts.dart';
+import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:money_mantor/models/contracts/transaction_contracts.dart';
 import 'package:money_mantor/repository/repo.dart';
 
 import '../models/person_model.dart';
 import '../models/transaction_model.dart';
 
+@singleton
 class TransactionRepo extends Repo<Transaction> {
+  final Logger _logger;
+
+  TransactionRepo(this._logger, super.db);
   @override
   Future<int> add(Transaction t) async {
     var map = t.toMap();
@@ -15,7 +19,7 @@ class TransactionRepo extends Repo<Transaction> {
     map[TransactionContracts.DATE_TIME] =
         map[TransactionContracts.DATE_TIME].toString();
 
-    return Global.Db.getDataBaseInstance().insert(
+    return db.getDataBaseInstance().insert(
       TransactionContracts.TABLE_NAME,
       map,
     );
@@ -23,7 +27,7 @@ class TransactionRepo extends Repo<Transaction> {
 
   @override
   Future<int> delete(int id) async {
-    return Global.Db.getDataBaseInstance().delete(
+    return db.getDataBaseInstance().delete(
       TransactionContracts.TABLE_NAME,
       where: '${TransactionContracts.ID}= ?',
       whereArgs: [id],
@@ -38,7 +42,7 @@ class TransactionRepo extends Repo<Transaction> {
     map[TransactionContracts.DATE_TIME] =
         map[TransactionContracts.DATE_TIME].toString();
 
-    return Global.Db.getDataBaseInstance().update(
+    return db.getDataBaseInstance().update(
       TransactionContracts.TABLE_NAME,
       map,
       where: '${TransactionContracts.ID} = ?',
@@ -48,7 +52,7 @@ class TransactionRepo extends Repo<Transaction> {
 
   @override
   Future<List<Transaction>?> fetchAll() async {
-    var data = await Global.Db.getDataBaseInstance().query(
+    var data = await db.getDataBaseInstance().query(
         TransactionContracts.TABLE_NAME,
         groupBy: TransactionContracts.DATE_TIME,
         orderBy: '${TransactionContracts.DATE_TIME} DESC');
@@ -57,7 +61,7 @@ class TransactionRepo extends Repo<Transaction> {
 
   @override
   Future<Transaction?> fetchById(int id) async {
-    var data = await Global.Db.getDataBaseInstance().query(
+    var data = await db.getDataBaseInstance().query(
       TransactionContracts.TABLE_NAME,
       where: '${TransactionContracts.ID} = ?',
       whereArgs: [id],
@@ -66,7 +70,7 @@ class TransactionRepo extends Repo<Transaction> {
   }
 
   Future<List<Transaction>?> fetchAllByPerson(Person person) async {
-    var data = await Global.Db.getDataBaseInstance().query(
+    var data = await db.getDataBaseInstance().query(
       TransactionContracts.TABLE_NAME,
       groupBy: TransactionContracts.DATE_TIME,
       orderBy: '${TransactionContracts.DATE_TIME} DESC',
@@ -83,7 +87,7 @@ class TransactionRepo extends Repo<Transaction> {
         res.add(_filter(element));
       }
     } catch (e) {
-      Global.Log.e(e);
+      _logger.e(e);
     }
     return res;
   }

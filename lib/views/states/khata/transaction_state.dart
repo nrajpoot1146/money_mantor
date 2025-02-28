@@ -4,11 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:money_mantor/repository/transaction_repo.dart';
+import 'package:money_mantor/di/locator.dart';
 import 'package:money_mantor/viewmodels/events/loading_event.dart';
 import 'package:money_mantor/viewmodels/events/transaction_events/transaction_add_event.dart';
-import 'package:money_mantor/views/Contracts/khata/transaction_statefulwidget.dart';
 
+import '../../../models/person_model.dart';
 import '../../../models/transaction_model.dart';
 import '../../../viewmodels/transaction_viewmodel.dart';
 
@@ -33,8 +33,7 @@ abstract class TransactionState<T extends TransactionStatefulWidget>
   bool isLoading = false;
 
   @protected
-  final TransactionViewModel viewModel =
-      TransactionViewModel(TransactionRepo());
+  final TransactionViewModel viewModel = locator<TransactionViewModel>();
 
   @protected
   final List<DropdownMenuEntry> dropDownMenuEntries =
@@ -122,4 +121,11 @@ abstract class TransactionState<T extends TransactionStatefulWidget>
     );
     viewModel.updateOrAdd(transaction);
   }
+}
+
+abstract class TransactionStatefulWidget extends StatefulWidget{
+  final Transaction? transaction;
+  final Person person;
+
+  const TransactionStatefulWidget({super.key, this.transaction, required this.person});
 }

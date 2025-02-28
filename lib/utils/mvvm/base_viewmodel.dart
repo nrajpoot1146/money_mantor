@@ -1,9 +1,15 @@
-import 'package:money_mantor/global.dart';
-import 'package:money_mantor/mvvm/observer.dart';
+import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:money_mantor/utils/mvvm/observer.dart';
 
 // base class for view models
-abstract class EventViewModel {
+abstract class BaseViewModel {
   final Map<Object, EventObservers> _observerList = {};
+
+  @protected
+  final Logger logger;
+
+  BaseViewModel(this.logger);
 
   // functions to register a method
   EventObservers<T> on<T extends ViewEvent>() {
@@ -25,7 +31,7 @@ abstract class EventViewModel {
     if (_observerList.containsKey(viewEvent.runtimeType)) {
       _observerList[viewEvent.runtimeType]!.notify(viewEvent);
     } else {
-      Global.Log.e("No Subscriber found for: ${viewEvent.runtimeType}");
+      logger.e("No Subscriber found for: ${viewEvent.runtimeType}");
     }
   }
 }
