@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:money_mantor/views/screens/khata/persons_list_screen.dart';
 import 'package:money_mantor/views/states/home_screen_state.dart';
+
+import '../widgets/menu_item_button.dart';
+import 'khata/persons_list_screen.dart';
 
 class HomeScreen extends HomeScreenStatefulWidget {
   const HomeScreen({super.key});
@@ -25,27 +27,16 @@ class _HomeScreenState extends HomeScreenState<HomeScreen> {
             1.0, // Width / Height ratio of each item (1.0 = square)
         children: List.generate(
           20, // Number of items
-          (index) => InkWell(
-            onTap: () {
+          (index) => CustomMenuItemButton(
+            icon: const Icon(Icons.monetization_on),
+            ontap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const PersonsListScreen(),
                 ),
               );
             },
-            splashColor: Colors.grey, // Red splash
-            highlightColor: Colors.redAccent
-                .withOpacity(0.2), // Semi-transparent red highlight
-            borderRadius: BorderRadius.circular(20),
-            child: const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.monetization_on),
-                  Text("Nmae"),
-                ],
-              ),
-            ),
+            title: "Name",
           ),
         ),
       ),

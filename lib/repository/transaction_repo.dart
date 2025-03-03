@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 import 'package:money_mantor/models/contracts/transaction_contracts.dart';
 import 'package:money_mantor/repository/repo.dart';
 
@@ -8,9 +7,8 @@ import '../models/transaction_model.dart';
 
 @singleton
 class TransactionRepo extends Repo<Transaction> {
-  final Logger _logger;
 
-  TransactionRepo(this._logger, super.db);
+  TransactionRepo(super.db, super.logger);
   @override
   Future<int> add(Transaction t) async {
     var map = t.toMap();
@@ -87,7 +85,7 @@ class TransactionRepo extends Repo<Transaction> {
         res.add(_filter(element));
       }
     } catch (e) {
-      _logger.e(e);
+      logger.e(e);
     }
     return res;
   }

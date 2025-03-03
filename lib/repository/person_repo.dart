@@ -1,13 +1,11 @@
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 import 'package:money_mantor/models/contracts/person_contracts.dart';
 import 'package:money_mantor/models/person_model.dart';
 import 'package:money_mantor/repository/repo.dart';
 
 @singleton
 class PersonRepo extends Repo<Person> {
-  final Logger _logger;
-  PersonRepo(super._db, this._logger);
+  PersonRepo(super.db, super.logger);
 
   @override
   Future<int> add(Person t) async {
@@ -37,7 +35,7 @@ class PersonRepo extends Repo<Person> {
         res.add(person);
       }
     } catch (e) {
-      _logger.e(e);
+      logger.e(e);
       return Future.value(null);
     }
     return Future.value(res);

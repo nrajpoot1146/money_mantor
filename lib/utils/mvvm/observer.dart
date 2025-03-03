@@ -1,31 +1,27 @@
 
 // unnecessary class created new class name EventObservers using which we can register multiple observer
-abstract class EventObserver {
-  void notify(ViewEvent event);
-}
+import 'package:money_mantor/utils/AppEventBus/app_event_bus.dart';
 
-// 
-class EventObservers<T extends ViewEvent> {
-  List<Function(T)> observers = List.empty(growable: true);
+// abstract class UiEventObserver {
+//   void notify(ViewEvent event);
+// }
 
-  void listen(Function(T) viewEvent) {
-    observers.add(viewEvent);
-  }
+// // 
+// class EventObservers<T extends ViewEvent> {
+//   List<Function(T)> observers = List.empty(growable: true);
 
-  void notify(T viewEvent) {
-    for (var element in observers) {
-      element(viewEvent);
-    }
-  }
-}
+//   void listen(Function(T) viewEvent) {
+//     observers.add(viewEvent);
+//   }
+
+//   void notify(T viewEvent) {
+//     for (var element in observers) {
+//       element(viewEvent);
+//     }
+//   }
+// }
 
 // help to transfer data
-abstract class ViewEvent {
-  String qualifier;
-  ViewEvent(this.qualifier);
-
-  @override
-  String toString() {
-    return 'ViewEvent{qualifier: $qualifier}';
-  }
+abstract class ViewEvent extends AppEvent{
+  ViewEvent(super.qualifier);
 }

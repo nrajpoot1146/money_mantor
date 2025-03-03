@@ -14,8 +14,9 @@ import 'package:logger/logger.dart' as _i974;
 
 import '../Database/db.dart' as _i47;
 import '../repository/person_repo.dart' as _i581;
-import '../repository/taxation_repo.dart' as _i545;
+import '../repository/taxation_repos.dart' as _i640;
 import '../repository/transaction_repo.dart' as _i114;
+import '../utils/AppEventBus/app_event_bus.dart' as _i451;
 import '../viewmodels/home_screen_viewmodel.dart' as _i382;
 import '../viewmodels/person_viewmodel.dart' as _i837;
 import '../viewmodels/transaction_viewmodel.dart' as _i657;
@@ -33,15 +34,23 @@ _i174.GetIt init(
   );
   gh.factory<_i382.HomeScreenViewmodel>(
       () => _i382.HomeScreenViewmodel(gh<_i974.Logger>()));
+  gh.singleton<_i451.AppEventBus>(() => _i451.AppEventBus(gh<_i974.Logger>()));
   gh.singleton<_i47.DB>(() => _i47.DB(gh<_i974.Logger>()));
-  gh.factory<_i545.TaxationRepo>(() => _i545.TaxationRepo(gh<_i47.DB>()));
   gh.singleton<_i581.PersonRepo>(() => _i581.PersonRepo(
         gh<_i47.DB>(),
         gh<_i974.Logger>(),
       ));
   gh.singleton<_i114.TransactionRepo>(() => _i114.TransactionRepo(
-        gh<_i974.Logger>(),
         gh<_i47.DB>(),
+        gh<_i974.Logger>(),
+      ));
+  gh.singleton<_i640.FYRepo>(() => _i640.FYRepo(
+        gh<_i47.DB>(),
+        gh<_i974.Logger>(),
+      ));
+  gh.singleton<_i640.TaxSlabRepo>(() => _i640.TaxSlabRepo(
+        gh<_i47.DB>(),
+        gh<_i974.Logger>(),
       ));
   gh.factory<_i837.PersonViewModel>(() => _i837.PersonViewModel(
         gh<_i581.PersonRepo>(),

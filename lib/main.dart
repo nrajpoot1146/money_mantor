@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:money_mantor/di/locator.dart';
 import 'package:money_mantor/global.dart';
 import 'package:money_mantor/views/screens/home_screen.dart';
-import 'package:money_mantor/views/screens/khata/persons_list_screen.dart';
 import 'di/configure_dependencies.dart';
 
 void main() async{
@@ -22,7 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  bool _isReady = false;
+  bool _isReady = true;
   @override
   void initState() {
     super.initState();

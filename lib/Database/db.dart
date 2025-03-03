@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
-import 'package:money_mantor/global.dart';
+import 'package:money_mantor/Database/event/db_events.dart';
+import 'package:money_mantor/di/configure_dependencies.dart';
 import 'package:money_mantor/models/contracts/person_contracts.dart';
+import 'package:money_mantor/models/contracts/taxation_contracts.dart';
+import 'package:money_mantor/utils/AppEventBus/app_event_bus.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -22,10 +25,14 @@ class DB {
     _logger.t("db onConfiguration.");
   }
 
-  void _onCreate(db, versio) {
+  void _onCreate(db, version) {
+    _logger.t("db onCreate");
     db.execute(PersonContracts.CREATE_TABLE);
     db.execute(TransactionContracts.CREATE_TABLE);
-    _logger.t("db onCreate");
+    db.execute(TaxationContracts.CREATE_TABLE);
+    db.execute(TaxSlabContracts.CREATE_TABLE);
+    
+    locator<AppEventBus>().notifyAsync(DBCreateEvent(db));
   }
 
   void _onDowngrade(db, oldVersion, newVersion) {
@@ -40,8 +47,8 @@ class DB {
     _logger.t("db onUpgrade");
   }
 
-  Future<bool> init() async {
-    var dbpath = r"C:\Data\Proj\money_mantor\lib\Database\";
+  Future<bool> initasync() async {
+    var dbpath = r"D:\Proj\money_mantor\lib\Database";
     if (Platform.isWindows || Platform.isLinux) {
       sqfliteFfiInit();
       var databaseFactory = databaseFactoryFfi;
