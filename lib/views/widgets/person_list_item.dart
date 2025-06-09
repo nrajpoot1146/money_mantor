@@ -12,7 +12,7 @@ class PersonListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Global.Log.t("build ${this.amount}");
+    Global.Log.t("build $amount");
     return Container(
       margin: const EdgeInsets.all(1),
       child: ListTile(

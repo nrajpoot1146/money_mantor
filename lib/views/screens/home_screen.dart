@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:money_mantor/views/screens/saving_details_screen.dart';
 import 'package:money_mantor/views/states/home_screen_state.dart';
 
 import '../widgets/menu_item_button.dart';
-import 'khata/persons_list_screen.dart';
 
 class HomeScreen extends HomeScreenStatefulWidget {
   const HomeScreen({super.key});
@@ -26,13 +26,13 @@ class _HomeScreenState extends HomeScreenState<HomeScreen> {
         childAspectRatio:
             1.0, // Width / Height ratio of each item (1.0 = square)
         children: List.generate(
-          20, // Number of items
+          10, // Number of items
           (index) => CustomMenuItemButton(
             icon: const Icon(Icons.monetization_on),
             ontap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const PersonsListScreen(),
+                  builder: (context) => const SavingDetailsScreen(),
                 ),
               );
             },

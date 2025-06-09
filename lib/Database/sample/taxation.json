@@ -1,10 +1,53 @@
 {
-    "taxation" : {
-        "ELSS" : 0.0,
-        "PPF" : 0.0,
-        "NPS" : 0.0,
-        "NSC" : 0.0,
-        "LIC" : 0.0,
-        "TermLifeInsurance" : 0.0
-    }
+    "data": [
+        {
+            "lower_limit": 0,
+            "upper_limit": 400000,
+            "tax_rate": 0,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        },
+        {
+            "lower_limit": 400000,
+            "upper_limit": 800000,
+            "tax_rate": 0.05,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        },
+        {
+            "lower_limit": 800000,
+            "upper_limit": 1200000,
+            "tax_rate": 0.1,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        },
+        {
+            "lower_limit": 1200000,
+            "upper_limit": 1600000,
+            "tax_rate": 0.15,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        },
+        {
+            "lower_limit": 1600000,
+            "upper_limit": 2000000,
+            "tax_rate": 0.2,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        },
+        {
+            "lower_limit": 2000000,
+            "upper_limit": 2400000,
+            "tax_rate": 0.25,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        },
+        {
+            "lower_limit": 2400000,
+            "upper_limit": "",
+            "tax_rate": 0.3,
+            "tax_regime": "RegimeType.NEW",
+            "fy_id": 0
+        }
+    ]
 }

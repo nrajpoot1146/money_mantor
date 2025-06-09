@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:money_mantor/Database/event/db_events.dart';
 import 'package:money_mantor/di/configure_dependencies.dart';
@@ -16,14 +19,15 @@ class FYRepo extends Repo<FYModel> {
 
   @override
   Future<int> add(FYModel t) {
-    // TODO: implement add
-    throw UnimplementedError();
+    return db
+        .getDataBaseInstance()
+        .insert(TaxationContracts.TABLE_NAME, t.toMap());
   }
 
   @override
   Future<int> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+    return db.getDataBaseInstance().delete(TaxationContracts.TABLE_NAME,
+        where: "${TaxationContracts.ID} = ?", whereArgs: [id]);
   }
 
   @override
@@ -113,10 +117,13 @@ class TaxSlabRepo extends Repo<TaxSlabRepo> {
     return Future.value(ret);
   }
 
-  void fillDefaultValue(DBCreateEvent dbCreateEvent) async{
-    int start = 24, end = 28;
-    for (var i = start; i <= end; i++) {
-      await dbCreateEvent.db.rawInsert(TaxSlabContracts.INSERT, [0, 10000, 5, RegimeType.NEW.toString(), 0]);
+  void fillDefaultValue(DBCreateEvent dbCreateEvent) async {
+    final String jsonString = await rootBundle.loadString(r'lib/Database/sample/taxation.json');
+    final data = jsonDecode(jsonString);
+    print(data);
+    for (var map in data['data']) {
+      await dbCreateEvent.db.insert(
+          TaxSlabContracts.TABLE_NAME, map);
     }
   }
 }
