@@ -1,17 +1,18 @@
 import 'package:money_mantor/models/contracts/taxation_contracts.dart';
+import 'package:money_mantor/models/model_base.dart';
 
-class FYModel {
-  int? id;
+class FYModel extends ModelBase
+{
   String? name;
 
-  FYModel({required this.id, required this.name});
+  FYModel({required this.name});
   FYModel.fromDefault()
-      : id = 0,
-        name = "";
+      : name = "",
+        super(id: 0);
 
   FYModel.fromMap(Map<String, Object?> map)
-      : id = map[TaxationContracts.ID] as int,
-        name = map[TaxationContracts.NAME] as String;
+      : name = map[TaxationContracts.NAME] as String,
+        super(id: map[TaxationContracts.ID] as int);
 
   Map<String, Object?> toMap() {
     return {
@@ -30,19 +31,19 @@ class FYModel {
   }
 }
 
-class TaxSlabModel {
-  int? id;
+class TaxSlabModel extends ModelBase
+{
   double? lowerLimit;
   double? upperLimit;
   RegimeType? regimeType;
   int? fyId;
 
   TaxSlabModel.fromMap(Map<String, Object?> map)
-      : id = map[TaxSlabContracts.ID] as int,
-        lowerLimit = map[TaxSlabContracts.LOWER_LIMIT] as double,
+      : lowerLimit = map[TaxSlabContracts.LOWER_LIMIT] as double,
         upperLimit = map[TaxSlabContracts.UPPER_LIMIT] as double,
         regimeType = map[TaxSlabContracts.TAX_REGIME] as RegimeType,
-        fyId = map[TaxSlabContracts.FY_ID] as int;
+        fyId = map[TaxSlabContracts.FY_ID] as int,
+        super(id: map[TaxSlabContracts.ID] as int);
 
   Map<String, Object?> toMap() {
     return {

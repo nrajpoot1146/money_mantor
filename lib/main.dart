@@ -4,6 +4,7 @@ import 'package:money_mantor/di/locator.dart';
 import 'package:money_mantor/global.dart';
 import 'package:money_mantor/views/screens/home_screen.dart';
 import 'di/configure_dependencies.dart';
+import 'utils/theme/theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,9 +70,14 @@ class _MyAppState extends State<MyApp> {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: MaterialTheme.lightScheme(),
         useMaterial3: true,
       ),
+      darkTheme: ThemeData(
+        colorScheme: MaterialTheme.darkScheme(),
+        useMaterial3: true
+      ),
+      themeMode: ThemeMode.dark,
       home:
           !_isReady ? const Text("Loading Config") : const HomeScreen(),
     );

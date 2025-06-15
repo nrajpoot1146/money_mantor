@@ -6,11 +6,11 @@ import 'package:money_mantor/Database/event/db_events.dart';
 import 'package:money_mantor/di/configure_dependencies.dart';
 import 'package:money_mantor/models/contracts/taxation_contracts.dart';
 import 'package:money_mantor/models/taxation_models.dart';
-import 'package:money_mantor/repository/repo.dart';
+import 'package:money_mantor/repository/repo_base.dart';
 import 'package:money_mantor/utils/AppEventBus/app_event_bus.dart';
 
 @singleton
-class FYRepo extends Repo<FYModel> {
+class FYRepo extends RepoBase<FYModel> {
   static const String _fy_prefix = "FY";
 
   FYRepo(super.db, super.logger) {
@@ -62,13 +62,13 @@ class FYRepo extends Repo<FYModel> {
 }
 
 @singleton
-class TaxSlabRepo extends Repo<TaxSlabRepo> {
+class TaxSlabRepo extends RepoBase<TaxSlabModel> {
   TaxSlabRepo(super.db, super.logger) {
     locator<AppEventBus>().on<DBCreateEvent>().listen(fillDefaultValue);
   }
 
   @override
-  Future<int> add(TaxSlabRepo t) {
+  Future<int> add(TaxSlabModel t) {
     // TODO: implement add
     throw UnimplementedError();
   }
@@ -80,19 +80,19 @@ class TaxSlabRepo extends Repo<TaxSlabRepo> {
   }
 
   @override
-  Future<List<TaxSlabRepo>?> fetchAll() {
+  Future<List<TaxSlabModel>?> fetchAll() {
     // TODO: implement fetchAll
     throw UnimplementedError();
   }
 
   @override
-  Future<TaxSlabRepo?> fetchById(int id) {
+  Future<TaxSlabModel?> fetchById(int id) {
     // TODO: implement fetchById
     throw UnimplementedError();
   }
 
   @override
-  Future<int> update(TaxSlabRepo t) {
+  Future<int> update(TaxSlabModel t) {
     // TODO: implement update
     throw UnimplementedError();
   }

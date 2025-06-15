@@ -1,7 +1,7 @@
 import 'package:money_mantor/models/contracts/person_contracts.dart';
+import 'package:money_mantor/models/model_base.dart';
 
-class Person {
-  int? id;
+class Person extends ModelBase {
   String name;
   String? mobileNo;
   String? emailId;
@@ -9,22 +9,21 @@ class Person {
   Person({required this.name, this.mobileNo, this.emailId});
 
   Person.fromDefault()
-      : id = 1,
-        name = 'Default',
+      : name = 'Default',
         mobileNo = '1234567890',
-        emailId = 'default@default.com';
+        emailId = 'default@default.com',
+        super(id: 1);
 
   Person.fromEmpty()
-      : id = null,
-        name = '',
+      : name = '',
         mobileNo = '',
         emailId = '';
 
   Person.fromMap(Map<String, Object?> map)
-      : id = map[PersonContracts.ID] as int,
-        name = map[PersonContracts.NAME] as String,
+      : name = map[PersonContracts.NAME] as String,
         mobileNo = map[PersonContracts.MOBILE_NO] as String,
-        emailId = map[PersonContracts.EMAIL_ID] as String;
+        emailId = map[PersonContracts.EMAIL_ID] as String,
+        super(id: map[PersonContracts.ID] as int);
 
   Map<String, Object?> toMap() {
     return {

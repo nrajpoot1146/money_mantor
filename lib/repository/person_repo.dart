@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
 import 'package:money_mantor/models/contracts/person_contracts.dart';
 import 'package:money_mantor/models/person_model.dart';
-import 'package:money_mantor/repository/repo.dart';
+import 'package:money_mantor/repository/repo_base.dart';
 
 @singleton
-class PersonRepo extends Repo<Person> {
+class PersonRepo extends RepoBase<Person> {
   PersonRepo(super.db, super.logger);
 
   @override
